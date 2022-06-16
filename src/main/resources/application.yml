@@ -1,0 +1,17 @@
+server:
+  port: 8003
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: ALWAYS
+    schema: classpath*:database/initDB.sql
+   # data: classpath*:database/populateDB.sql
+    url: jdbc:postgresql://localhost:5432/yatest?stringtype=unspecified
+    username: admin
+    password: 111
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: none
+
