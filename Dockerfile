@@ -11,7 +11,7 @@ FROM adoptopenjdk:11-jre-hotspot as builder
 WORKDIR app
 COPY --from=mvn-builder app/target target
 ARG JAR_FILE=target/*.jar
-RUN java -Djarmode=layertools -Xms50m -Xmx1024m -jar ${JAR_FILE} extract
+RUN java -Djarmode=layertools -Xms50m -Xmx528m -jar ${JAR_FILE} extract
 
 FROM adoptopenjdk:11-jre-hotspot
 WORKDIR app
