@@ -3,14 +3,14 @@ services:
 
   db:
     container_name: yatest-docker
-    image: postgres:14.3
+    image: postgres:13-alpine
     restart: unless-stopped
     ports:
-      - "5444:5432"
+      - 5444:5432
     environment:
-      POSTGRES_DB: "yatest"
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "111"
+      POSTGRES_DB: yatest
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 111
     volumes:
       - ./src/main/resources/database/initDB.sql:/docker-entrypoint-initdb.d
       - ./db/data:/var/lib/postgresql/data
@@ -33,6 +33,6 @@ services:
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: 111
     ports:
-      - "80:80"
+      - 80:80
     depends_on:
       - db
