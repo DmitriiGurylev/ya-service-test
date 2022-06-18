@@ -24,10 +24,11 @@ services:
       resources:
         limits:
           cpus: '1'
-          memory: 4G
+          memory: 500Mb
 
   ya-test:
     build: ./
+    restart: unless-stopped
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/yatest
       SPRING_DATASOURCE_USERNAME: admin
