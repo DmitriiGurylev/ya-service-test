@@ -6,7 +6,7 @@ services:
     image: postgres:14.3
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - "5444:5432"
     environment:
       POSTGRES_DB: "yatest"
       POSTGRES_USER: "admin"
