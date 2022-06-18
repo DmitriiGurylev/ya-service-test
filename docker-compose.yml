@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.4"
 services:
 
   db:
@@ -12,16 +12,16 @@ services:
       POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "111"
     volumes:
+      - ./src/main/resources/database/initDB.sql:/docker-entrypoint-initdb.d
       - ./db/data:/var/lib/postgresql/data
-
-#  aspi-back:
-#    build: infrastructure-back
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
-#      SPRING_DATASOURCE_USERNAME: postgres
-#      SPRING_DATASOURCE_PASSWORD: 123
-#      SPRING_PROFILES_ACTIVE: dev
-#    ports:
-#      - 8080:8080
-#    depends_on:
-#      - db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d yatest" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4G
