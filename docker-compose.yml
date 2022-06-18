@@ -25,3 +25,14 @@ services:
         limits:
           cpus: '1'
           memory: 4G
+
+  ya-test:
+    build: ./
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/yatest
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: 111
+    ports:
+      - 80:80
+    depends_on:
+      - db
