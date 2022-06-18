@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+
+  db:
+    container_name: yatest-docker
+    image: postgres:14.3
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "yatest"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "111"
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+
+#  aspi-back:
+#    build: infrastructure-back
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: 123
+#      SPRING_PROFILES_ACTIVE: dev
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - db
