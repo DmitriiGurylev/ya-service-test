@@ -14,17 +14,16 @@ services:
     volumes:
       - ./src/main/resources/database/initDB.sql:/docker-entrypoint-initdb.d
       - ./db/data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U admin -d yatest" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 500Mb
+#    healthcheck:
+#      test: [ "CMD-SHELL", "pg_isready -U admin -d yatest" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+#      start_period: 10s
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '1'
 
   ya-test:
     build: ./
