@@ -5,7 +5,7 @@ create table if not exists shop_unit
     price                      double precision,
     parent_id                  varchar,
     type                       varchar,
-    date                       timestamp with time zone 
+    date                       timestamp
 );
 
 create table if not exists relation
