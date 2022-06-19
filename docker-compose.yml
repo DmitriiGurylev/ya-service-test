@@ -11,8 +11,9 @@ services:
       POSTGRES_DB: yatest
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 111
+    command: --init-file ./src/main/resources/database/initDB.sql
     volumes:
-      - ./src/main/resources/database/initDB.sql:/docker-entrypoint-initdb.d
+      - ./src/main/resources/database/initDB.sql
       - ./db/data:/var/lib/postgresql/data
 #    healthcheck:
 #      test: [ "CMD-SHELL", "pg_isready -U admin -d yatest" ]
