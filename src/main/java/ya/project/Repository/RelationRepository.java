@@ -14,6 +14,9 @@ public interface RelationRepository extends CrudRepository<Relation, String> {
 
     List<Relation> findByKeyParentId(String parentId);
 
+
+    Optional<Relation> findByKeyChildId(String parentId);
+
     void deleteByKeyParentId(String parentId);
 
     Optional<Relation> findByKeyParentIdAndKeyChildId(String parentId, String childId);

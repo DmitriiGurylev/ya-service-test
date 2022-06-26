@@ -107,33 +107,45 @@ public class Service {
         }
         String updateDate = shopUnitImportRequest.getUpdateDate();
 
-        for (ShopUnitImport shopUnitToUpdate : shopUnitImports) {
-            Optional<ShopUnit> existingItemOpt = elementRepository.findById(shopUnitToUpdate.getId());
+        for (ShopUnitImport shopUnitToImport : shopUnitImports) {
+            Optional<ShopUnit> existingItemOpt = elementRepository.findById(shopUnitToImport.getId());
             if (existingItemOpt.isPresent()) {
                 ShopUnit su = existingItemOpt.get();
-                if (su.getType().equals(shopUnitToUpdate.getType())) {
-                    su.setName(shopUnitToUpdate.getName());
+                if (su.getType().equals(shopUnitToImport.getType())) {
+                    su.setName(shopUnitToImport.getName());
                     su.setDate(updateDate);
-                    su.setPrice(shopUnitToUpdate.getPrice());
-                    su.setParentId(shopUnitToUpdate.getParentId());
+                    su.setPrice(shopUnitToImport.getPrice());
+                    su.setParentId(shopUnitToImport.getParentId());
+                    Optional<Relation> relationOpt = relationRepository.findByKeyChildId(su.getId());
+                    if (relationOpt.isPresent()) {
+                        if (!relationOpt.get().getKey().getParentId().equals(shopUnitToImport.getParentId())) {
+                            relationRepository.deleteByKeyParentIdAndKeyChildId(
+                                    relationOpt.get().getKey().getParentId(),
+                                    relationOpt.get().getKey().getChildId()
+                            );
+                        }
+                        relationRepository.save(
+                                new Relation(shopUnitToImport.getParentId(), su.getId())
+                        );
+                    }
                     elementRepository.save(su);
                 } else {
                     log.warn("UNEQUAL TYPES");
                     return false;
                 }
             } else {
-                ShopUnit su = new ShopUnit(shopUnitToUpdate);
-                String parentId = shopUnitToUpdate.getParentId();
+                ShopUnit su = new ShopUnit(shopUnitToImport);
+                String parentId = shopUnitToImport.getParentId();
                 if (parentId!=null) {
                     elementRepository.findById(parentId).ifPresent(item ->
                             relationRepository.save(
-                                    new Relation(parentId, shopUnitToUpdate.getId()))
+                                    new Relation(parentId, shopUnitToImport.getId()))
                     );
                 }
                 su.setDate(updateDate);
                 elementRepository.save(su);
             }
-            Optional<ShopUnit> itemToFindAveragePrice = elementRepository.findById(getHighestParentId(shopUnitToUpdate.getId()));
+            Optional<ShopUnit> itemToFindAveragePrice = elementRepository.findById(getHighestParentId(shopUnitToImport.getId()));
             if (itemToFindAveragePrice.isPresent()) {
                 setAveragePriceOfCategory(itemToFindAveragePrice.get().getId());
             } else {
