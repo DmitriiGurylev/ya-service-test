@@ -3,21 +3,21 @@
     {
       "type": "CATEGORY",
       "name": "Смартфоны",
-      "id": "2",
-      "parentId": "1"
+      "id": "2test",
+      "parentId": "1test"
     },
     {
       "type": "OFFER",
       "name": "jPhone 13",
-      "id": "3",
-      "parentId": "2",
+      "id": "3test",
+      "parentId": "2test",
       "price": 79999
     },
     {
       "type": "OFFER",
       "name": "Xomiа Readme 10",
-      "id": "4",
-      "parentId": "2",
+      "id": "4test",
+      "parentId": "2test",
       "price": 59999
     }
   ],
