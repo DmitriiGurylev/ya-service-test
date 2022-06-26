@@ -142,30 +142,8 @@ public class TestImportInvalid {
     @AfterAll
     @Transactional
     public void afterAll() {
-        elementRepository.findById("1").ifPresent(unit -> elementRepository.deleteById("1"));
-        relationRepository.findByKeyParentId("1")
-                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
-        elementRepository.findById("2").ifPresent(unit -> elementRepository.deleteById("2"));
-        relationRepository.findByKeyParentId("2")
-                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
-        elementRepository.findById("3").ifPresent(unit -> elementRepository.deleteById("3"));
-        relationRepository.findByKeyParentId("3")
-                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
-        elementRepository.findById("4").ifPresent(unit -> elementRepository.deleteById("4"));
-        relationRepository.findByKeyParentId("4")
-                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
-        elementRepository.findById("5").ifPresent(unit -> elementRepository.deleteById("5"));
-        relationRepository.findByKeyParentId("5")
-                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
-        elementRepository.findById("6").ifPresent(unit -> elementRepository.deleteById("6"));
-        relationRepository.findByKeyParentId("6")
-                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
-        elementRepository.findById("7").ifPresent(unit -> elementRepository.deleteById("7"));
-        relationRepository.findByKeyParentId("7")
-                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
-        elementRepository.findById("8").ifPresent(unit -> elementRepository.deleteById("8"));
-        relationRepository.findByKeyParentId("8")
-                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
+        Arrays.asList("1test", "2test", "3test", "4test", "5test", "6test", "7test", "8test")
+                .forEach(s -> elementRepository.findById(s).ifPresent(unit -> service.deleteItemByIdAndChildren(s)));
     }
 
 }

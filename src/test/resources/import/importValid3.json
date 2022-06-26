@@ -3,21 +3,21 @@
     {
       "type": "CATEGORY",
       "name": "Телевизоры",
-      "id": "5",
-      "parentId": "1"
+      "id": "5test",
+      "parentId": "1test"
     },
     {
       "type": "OFFER",
       "name": "Samson 70\" LED UHD Smart",
-      "id": "6",
-      "parentId": "5",
+      "id": "6test",
+      "parentId": "5test",
       "price": 32999
     },
     {
       "type": "OFFER",
       "name": "Phyllis 50\" LED UHD Smarter",
-      "id": "7",
-      "parentId": "5",
+      "id": "7test",
+      "parentId": "5test",
       "price": 49999
     }
   ],

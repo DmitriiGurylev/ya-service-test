@@ -69,9 +69,8 @@ public class TestImportValid {
     @org.junit.jupiter.api.Test
     @Transactional
     public void afterAll() {
-        Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8").forEach(s -> {
-            elementRepository.findById(s).ifPresent(unit -> service.deleteItemByIdAndChildren(s));
-        });
+        Arrays.asList("1test", "2test", "3test", "4test", "5test", "6test", "7test", "8test")
+                .forEach(s -> elementRepository.findById(s).ifPresent(unit -> service.deleteItemByIdAndChildren(s)));
     }
 
 }
