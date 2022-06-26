@@ -97,6 +97,7 @@ public class Service {
 
     public boolean importItems(ShopUnitImportRequest shopUnitImportRequest) {
         if (shopUnitImportRequest == null) {
+            log.warn("ITEMS ARE NULL");
             return false;
         }
         List<ShopUnitImport> shopUnitImports = shopUnitImportRequest.getShopUnits();
@@ -183,8 +184,10 @@ public class Service {
 
         shopUnit.setDate(DateHelper.fromDate(date));
 
-
         if (shopUnit.getType().equals(ShopUnitType.CATEGORY)) {
+            if (shopUnit.getChildren()==null) {
+                shopUnit.setChildren(new LinkedList<>());
+            }
             List<Relation> relationList = relationRepository.findByKeyParentId(shopUnit.getId());
             List<String> childrenId = relationList.stream()
                     .map(r -> r.getKey().getChildId())

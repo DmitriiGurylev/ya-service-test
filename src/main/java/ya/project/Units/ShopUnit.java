@@ -45,7 +45,7 @@ public class ShopUnit {
 
     @JsonProperty("children")
     @Transient
-    private  List<ShopUnit> children = new LinkedList<>();
+    private  List<ShopUnit> children = null;
 
     public ShopUnit (ShopUnitImport shopUnitImport) {
         this.id =shopUnitImport.getId();
