@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ya.project.Repository.ElementRepository;
 import ya.project.Repository.RelationRepository;
 import ya.project.Service.Service;
-import ya.project.Units.Relation;
 import ya.project.Units.ShopUnitImportRequest;
 
 import java.io.File;
@@ -20,7 +19,7 @@ import java.util.Arrays;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TestDeleteValid {
+public class TestDelete {
 
     @Autowired
     Service service;
