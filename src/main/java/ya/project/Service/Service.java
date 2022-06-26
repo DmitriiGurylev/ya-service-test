@@ -42,22 +42,24 @@ public class Service {
     }
 
     public boolean deleteItemByIdAndChildren(String id) {
-        Optional<ShopUnit> itemToRemoveOpt = elementRepository.findById(id);
-        if (itemToRemoveOpt.isEmpty()) {
+        Optional<ShopUnit> unitToRemoveOpt = elementRepository.findById(id);
+        if (unitToRemoveOpt.isEmpty()) {
             return false;
         }
-        ShopUnit shopUnitToRemove = itemToRemoveOpt.get();
+        ShopUnit shopUnitToRemove = unitToRemoveOpt.get();
         String parentId = shopUnitToRemove.getParentId();
         if (parentId!=null) {
             relationRepository.deleteByKeyParentIdAndKeyChildId(parentId, id);
         }
         List<String> children = findAllChildrenAsListStructure(shopUnitToRemove.getId());
+
+        Optional<ShopUnit> itemToFindAveragePrice = elementRepository.findById(getHighestParentId(id));
+
         elementRepository.deleteById(id);
         relationRepository.deleteByKeyParentId(id);
         children.forEach(c -> elementRepository.deleteById(c));
         children.forEach(c -> relationRepository.deleteByKeyParentId(c));
 
-        Optional<ShopUnit> itemToFindAveragePrice = elementRepository.findById(getHighestParentId(id));
         if (itemToFindAveragePrice.isPresent()) {
             setAveragePriceOfCategory(itemToFindAveragePrice.get().getId());
         } else {

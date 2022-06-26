@@ -31,28 +31,21 @@ public class TestImportInvalid {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @BeforeAll
-    public void beforeAll() throws IOException {
-        ShopUnitImportRequest itemsToImport = objectMapper.readValue(
-                new File("src/test/resources/importInValid1.json"), ShopUnitImportRequest.class
-        );
-    }
-
     @org.junit.jupiter.api.Test
-    public void successImport1() throws IOException {
+    public void failImport1() throws IOException {
         ShopUnitImportRequest itemsToImport = objectMapper.readValue(
-                new File("src/test/resources/importInValid1.json"), ShopUnitImportRequest.class
+                new File("src/test/resources/import/importInvalid1.json"), ShopUnitImportRequest.class
         );
         boolean imported = service.importItems(itemsToImport);
         Assertions.assertFalse(imported);
     }
 
     @org.junit.jupiter.api.Test
-    public void successImport2()  {
+    public void failImport2()  {
         ShopUnitImportRequest itemsToImport = null;
         try {
             itemsToImport = objectMapper.readValue(
-                    new File("src/test/resources/importInValid2.json"), ShopUnitImportRequest.class
+                    new File("src/test/resources/import/importInvalid2.json"), ShopUnitImportRequest.class
             );
         } catch (IOException e) {
             Assertions.assertFalse(false);
@@ -62,11 +55,11 @@ public class TestImportInvalid {
     }
 
     @org.junit.jupiter.api.Test
-    public void successImport3() {
+    public void failImport3() {
         ShopUnitImportRequest itemsToImport = null;
         try {
             itemsToImport = objectMapper.readValue(
-                    new File("src/test/resources/importInValid3.json"), ShopUnitImportRequest.class
+                    new File("src/test/resources/import/importInvalid3.json"), ShopUnitImportRequest.class
             );
         } catch (IOException e) {
             Assertions.assertFalse(false);
@@ -76,11 +69,11 @@ public class TestImportInvalid {
     }
 
     @org.junit.jupiter.api.Test
-    public void successImport4() {
+    public void failImport4() {
         ShopUnitImportRequest itemsToImport = null;
         try {
             itemsToImport = objectMapper.readValue(
-                    new File("src/test/resources/importInValid4.json"), ShopUnitImportRequest.class
+                    new File("src/test/resources/import/importInvalid4.json"), ShopUnitImportRequest.class
             );
         } catch (IOException e) {
             Assertions.assertFalse(false);
@@ -90,11 +83,11 @@ public class TestImportInvalid {
     }
 
     @org.junit.jupiter.api.Test
-    public void successImport5() {
+    public void failImport5() {
         ShopUnitImportRequest itemsToImport = null;
         try {
             itemsToImport = objectMapper.readValue(
-                    new File("src/test/resources/importInValid5.json"), ShopUnitImportRequest.class
+                    new File("src/test/resources/import/importInvalid5.json"), ShopUnitImportRequest.class
             );
         } catch (IOException e) {
             Assertions.assertFalse(false);
@@ -104,11 +97,11 @@ public class TestImportInvalid {
     }
 
     @org.junit.jupiter.api.Test
-    public void successImport6() {
+    public void failImport6() {
         ShopUnitImportRequest itemsToImport = null;
         try {
             itemsToImport = objectMapper.readValue(
-                    new File("src/test/resources/importInValid6.json"), ShopUnitImportRequest.class
+                    new File("src/test/resources/import/importInvalid6.json"), ShopUnitImportRequest.class
             );
         } catch (IOException e) {
             Assertions.assertFalse(false);
@@ -118,11 +111,11 @@ public class TestImportInvalid {
     }
 
     @org.junit.jupiter.api.Test
-    public void successImport7() {
+    public void failImport7() {
         ShopUnitImportRequest itemsToImport = null;
         try {
             itemsToImport = objectMapper.readValue(
-                    new File("src/test/resources/importInValid7.json"), ShopUnitImportRequest.class
+                    new File("src/test/resources/import/importInvalid7.json"), ShopUnitImportRequest.class
             );
         } catch (IOException e) {
             Assertions.assertFalse(false);
@@ -132,11 +125,11 @@ public class TestImportInvalid {
     }
 
     @org.junit.jupiter.api.Test
-    public void successImport8() {
+    public void failImport8() {
         ShopUnitImportRequest itemsToImport = null;
         try {
             itemsToImport = objectMapper.readValue(
-                    new File("src/test/resources/importInValid8.json"), ShopUnitImportRequest.class
+                    new File("src/test/resources/import/import/importInvalid8.json"), ShopUnitImportRequest.class
             );
         } catch (IOException e) {
             Assertions.assertFalse(false);
@@ -149,12 +142,30 @@ public class TestImportInvalid {
     @AfterAll
     @Transactional
     public void afterAll() {
-        Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8").forEach(s -> {
-           elementRepository.findById(s).ifPresent(unit -> elementRepository.deleteById(s));
-            for (Relation unit : relationRepository.findByKeyParentId(s)) {
-                relationRepository.deleteByKeyParentId(unit.getKey().getParentId());
-            }
-        });
+        elementRepository.findById("1").ifPresent(unit -> elementRepository.deleteById("1"));
+        relationRepository.findByKeyParentId("1")
+                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
+        elementRepository.findById("2").ifPresent(unit -> elementRepository.deleteById("2"));
+        relationRepository.findByKeyParentId("2")
+                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
+        elementRepository.findById("3").ifPresent(unit -> elementRepository.deleteById("3"));
+        relationRepository.findByKeyParentId("3")
+                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
+        elementRepository.findById("4").ifPresent(unit -> elementRepository.deleteById("4"));
+        relationRepository.findByKeyParentId("4")
+                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
+        elementRepository.findById("5").ifPresent(unit -> elementRepository.deleteById("5"));
+        relationRepository.findByKeyParentId("5")
+                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
+        elementRepository.findById("6").ifPresent(unit -> elementRepository.deleteById("6"));
+        relationRepository.findByKeyParentId("6")
+                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
+        elementRepository.findById("7").ifPresent(unit -> elementRepository.deleteById("7"));
+        relationRepository.findByKeyParentId("7")
+                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
+        elementRepository.findById("8").ifPresent(unit -> elementRepository.deleteById("8"));
+        relationRepository.findByKeyParentId("8")
+                .forEach(unit -> relationRepository.deleteByKeyParentId(unit.getKey().getParentId()));
     }
 
 }

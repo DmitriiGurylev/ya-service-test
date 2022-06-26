@@ -1,6 +1,7 @@
 package ya.project;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
@@ -19,7 +20,7 @@ import java.util.Arrays;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TestImportValid {
+public class TestDeleteValid {
 
     @Autowired
     Service service;
@@ -30,43 +31,39 @@ public class TestImportValid {
     @Autowired
     private ObjectMapper objectMapper;
 
+    ShopUnitImportRequest itemsToImport;
+
     @org.junit.jupiter.api.Test
-    public void successImport1() throws IOException {
-        ShopUnitImportRequest itemsToImport = objectMapper.readValue(
+    @BeforeAll
+    public void importBeforeTests() throws IOException {
+        itemsToImport = objectMapper.readValue(
                 new File("src/test/resources/import/importValid1.json"), ShopUnitImportRequest.class
         );
-        boolean imported = service.importItems(itemsToImport);
-        Assertions.assertTrue(imported);
     }
 
     @org.junit.jupiter.api.Test
-    public void successImport2() throws IOException {
-        ShopUnitImportRequest itemsToImport = objectMapper.readValue(
-                new File("src/test/resources/import/importValid2.json"), ShopUnitImportRequest.class
-        );
-        boolean imported = service.importItems(itemsToImport);
-        Assertions.assertTrue(imported);
+    public void successDelete()  {
+        service.importItems(itemsToImport);
+        boolean deleted = service.deleteItemByIdAndChildren("1");
+        Assertions.assertTrue(deleted);
     }
 
     @org.junit.jupiter.api.Test
-    public void successImport3() throws IOException {
-        ShopUnitImportRequest itemsToImport = objectMapper.readValue(
-                new File("src/test/resources/import/importValid3.json"), ShopUnitImportRequest.class
-        );
-        boolean imported = service.importItems(itemsToImport);
-        Assertions.assertTrue(imported);
+    public void failDelete1()  {
+        service.importItems(itemsToImport);
+        boolean deleted = service.deleteItemByIdAndChildren("");
+        Assertions.assertFalse(deleted);
     }
 
     @org.junit.jupiter.api.Test
-    public void successImport4() throws IOException {
-        ShopUnitImportRequest itemsToImport = objectMapper.readValue(
-                new File("src/test/resources/import/importValid4.json"), ShopUnitImportRequest.class
-        );
-        boolean imported = service.importItems(itemsToImport);
-        Assertions.assertTrue(imported);
+    public void failDelete2()  {
+        service.importItems(itemsToImport);
+        boolean deleted = service.deleteItemByIdAndChildren("111111111111111");
+        Assertions.assertFalse(deleted);
     }
 
     @org.junit.jupiter.api.Test
+    @AfterAll
     @Transactional
     public void afterAll() {
         Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8").forEach(s -> {
