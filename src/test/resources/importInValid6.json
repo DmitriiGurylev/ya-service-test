@@ -1,0 +1,11 @@
+{
+  "items1": [
+    {
+      "type": "CATEGORY",
+      "name": "Товары",
+      "id": "",
+      "parentId": null
+    }
+  ],
+  "updateDate": "2022-02-01T12:00:00.000Z"
+}
