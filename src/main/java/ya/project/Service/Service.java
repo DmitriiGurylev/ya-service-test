@@ -68,7 +68,18 @@ public class Service {
     }
 
     private boolean validateShopUnitsWhileImport(List<ShopUnitImport> shopUnitImports) {
+        if (shopUnitImports == null) {
+            log.warn("SHOP UNIT IMPORTS OBJECT IS NULL");
+            return false;
+        }
         for (ShopUnitImport su : shopUnitImports) {
+            if (su.getType()==null) {
+                log.warn("CATEGORY IS NULL");
+                return false;
+            }
+            if (su.getParentId()!=null && su.getParentId().isEmpty()) {
+                return false;
+            }
             if (su.getType().equals(ShopUnitType.CATEGORY)) {
                 if (su.getPrice() != null || su.getName() == null) {
                     log.warn("CATEGORY HAS INCORRECT PRICE");
@@ -83,6 +94,9 @@ public class Service {
     }
 
     public boolean importItems(ShopUnitImportRequest shopUnitImportRequest) {
+        if (shopUnitImportRequest == null) {
+            return false;
+        }
         List<ShopUnitImport> shopUnitImports = shopUnitImportRequest.getShopUnits();
         boolean validated = validateShopUnitsWhileImport(shopUnitImports);
         if (!validated) {
@@ -131,7 +145,8 @@ public class Service {
     private String getHighestParentId(String currentItemId) {
         Optional<ShopUnit> item = elementRepository.findById(currentItemId);
         if (item.isPresent()) {
-            return item.get().getParentId() == null ?
+            String parentId = item.get().getParentId();
+            return parentId == null ?
                     currentItemId :
                     getHighestParentId(item.get().getParentId());
         } else {

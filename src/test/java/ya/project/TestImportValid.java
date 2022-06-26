@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TestImport {
+public class TestImportValid {
 
     @Autowired
     Service service;
@@ -80,6 +80,14 @@ public class TestImport {
         elementRepository.deleteById("6");
         elementRepository.deleteById("7");
         elementRepository.deleteById("8");
+        relationRepository.deleteByKeyParentId("1");
+        relationRepository.deleteByKeyParentId("2");
+        relationRepository.deleteByKeyParentId("3");
+        relationRepository.deleteByKeyParentId("4");
+        relationRepository.deleteByKeyParentId("5");
+        relationRepository.deleteByKeyParentId("6");
+        relationRepository.deleteByKeyParentId("7");
+        relationRepository.deleteByKeyParentId("8");
     }
 
 }
