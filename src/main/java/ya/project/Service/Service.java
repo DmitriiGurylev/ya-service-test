@@ -23,12 +23,6 @@ public class Service {
     @Autowired
     RelationRepository relationRepository;
 
-    //        TimeZone tz = TimeZone.getTimeZone("UTC");
-//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
-//        df.setTimeZone(tz);
-//        String nowAsISO = df.format(item.getUpdateDate());
-//        item.setUpdateDate(nowAsISO);
-
     public ShopUnit getInfoOfItemAndItsChildrenById(String id) {
         Optional<ShopUnit> itemOpt = elementRepository.findById(id);
         if (itemOpt.isPresent()) {
@@ -140,7 +134,7 @@ public class Service {
                 if (parentId!=null) {
                     elementRepository.findById(parentId).ifPresent(item ->
                             relationRepository.save(
-                                    new Relation(parentId, shopUnitToImport.getId()))
+                                    new Relation(parentId, su.getId()))
                     );
                 }
                 su.setDate(updateDate);
