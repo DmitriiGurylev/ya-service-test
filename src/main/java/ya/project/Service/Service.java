@@ -119,10 +119,10 @@ public class Service {
                                     relationOpt.get().getKey().getChildId()
                             );
                         }
-                        relationRepository.save(
-                                new Relation(su.getParentId(), su.getId())
-                        );
                     }
+                    relationRepository.save(
+                            new Relation(su.getParentId(), su.getId())
+                    );
                     elementRepository.save(su);
                 } else {
                     log.warn("UNEQUAL TYPES");
