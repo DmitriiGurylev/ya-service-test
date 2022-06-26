@@ -118,14 +118,14 @@ public class Service {
                     su.setParentId(shopUnitToImport.getParentId());
                     Optional<Relation> relationOpt = relationRepository.findByKeyChildId(su.getId());
                     if (relationOpt.isPresent()) {
-                        if (!relationOpt.get().getKey().getParentId().equals(shopUnitToImport.getParentId())) {
+                        if (!relationOpt.get().getKey().getParentId().equals(su.getParentId())) {
                             relationRepository.deleteByKeyParentIdAndKeyChildId(
                                     relationOpt.get().getKey().getParentId(),
                                     relationOpt.get().getKey().getChildId()
                             );
                         }
                         relationRepository.save(
-                                new Relation(shopUnitToImport.getParentId(), su.getId())
+                                new Relation(su.getParentId(), su.getId())
                         );
                     }
                     elementRepository.save(su);
