@@ -160,12 +160,14 @@ public class Service {
         Optional<ShopUnit> item = elementRepository.findById(currentItemId);
         if (item.isPresent()) {
             String parentId = item.get().getParentId();
-            return parentId == null ?
+            if (parentId == null) return currentItemId;
+            String highestParent = getHighestParentId(item.get().getParentId());
+            return highestParent.equals("null-1") ?
                     currentItemId :
-                    getHighestParentId(item.get().getParentId());
+                    highestParent;
         } else {
             log.warn("ITEM DOESN'T EXIST");
-            throw new RuntimeException("Item doesn't exist");
+            return "null-1";
         }
     }
 
