@@ -4,7 +4,7 @@ services:
   db:
     container_name: yatest-db
     image: postgres:14.3
-    restart: always
+    restart: unless-stopped
     ports:
       - 5444:5432
     environment:
@@ -28,7 +28,7 @@ services:
   service:
     container_name: yatest-service
     build: ./
-    restart: always
+    restart: unless-stopped
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/yatest?stringtype=unspecified
       SPRING_DATASOURCE_USERNAME: admin
